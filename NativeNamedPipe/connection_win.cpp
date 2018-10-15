@@ -3,18 +3,39 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-NamedPipeClient::NamedPipeClient() 
+class BaseNamedPipeClient
 {
-	handle = INVALID_HANDLE_VALUE;
-	isOpened = false;
-}
+	static BaseNamedPipeClient* BaseNamedPipeClient::create() { return (BaseNamedPipeClient*)(new NamedPipeClientWindows()); }	
+};
 
-bool NamedPipeClient::isConnected() 
+class NamedPipeClientWindows : BaseNamedPipeClient
+{
+public:
+	NamedPipeClientWindows()
+	{
+		handle = INVALID_HANDLE_VALUE;
+		isOpened = false;
+	}
+
+	bool isConnected();
+	int readFrame(unsigned char* buffer, int length);
+	int writeFrame(unsigned char* buffer, int length);
+
+	int open(char* pipename);
+	void close(void);
+
+private:
+	HANDLE handle;
+	bool isOpened;
+};
+
+
+bool NamedPipeClientWindows::isConnected()
 {
 	return handle != NULL && isOpened && handle != INVALID_HANDLE_VALUE;
 }
 
-int NamedPipeClient::open(char* pipename)
+int NamedPipeClientWindows::open(char* pipename)
 {
 	//Creates a connection to the pipe
 	handle = ::CreateFileA(pipename, GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
@@ -54,14 +75,14 @@ int NamedPipeClient::open(char* pipename)
 	return lasterr;
 }
 
-void NamedPipeClient::close() 
+void NamedPipeClientWindows::close()
 {
 	::CloseHandle(handle);
 	handle = INVALID_HANDLE_VALUE;
 	isOpened = false;
 }
 
-int NamedPipeClient::readFrame(unsigned char* buffer, int length)
+int NamedPipeClientWindows::readFrame(unsigned char* buffer, int length)
 {
 	/*
 	if (!PeekNamedPipe(handle)) return false;
@@ -111,7 +132,7 @@ int NamedPipeClient::readFrame(unsigned char* buffer, int length)
 	}
 }
 
-int NamedPipeClient::writeFrame(unsigned char* buffer, int length)
+int NamedPipeClientWindows::writeFrame(unsigned char* buffer, int length)
 {
 	if (length == 0) return 0;
 	if (!isConnected()) return -1;
