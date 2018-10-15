@@ -83,7 +83,7 @@ public:
 
 	void close(void) override
 	{
-		if (isConnected()) close(sock);
+		if (isConnected()) ::close(sock);
 		sock = -1;
 		isOpened = false;
 	}
