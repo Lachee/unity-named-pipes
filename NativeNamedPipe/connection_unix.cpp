@@ -20,13 +20,13 @@ class NamedPipeClientUnix : BaseNamedPipeClient
 public:
 	NamedPipeClientUnix()
 	{
-		socket = -1;
+		sock = -1;
 		isOpened = false;
 	}
 
 	bool isConnected() override
 	{
-		return isOpened && socket != -1;
+		return isOpened && sock != -1;
 	}
 
 	int readFrame(unsigned char* buffer, int length) override
@@ -35,7 +35,7 @@ public:
 		if (!isConnected()) return -1;
 
 		size_t bytesLength = (size_t)length;
-		int res = (int)recv(socket, buffer, bytesLength, MsgFlags);
+		int res = (int)recv(sock, buffer, bytesLength, MsgFlags);
 		if (res < 0) return (int)res - 1;
 
 		return res;
@@ -47,7 +47,7 @@ public:
 		if (!isConnected()) return -1;
 
 		size_t bytesLength = (size_t)length;
-		ssize_t sentBytes = send(socket, buffer, length, MsgFlags);
+		ssize_t sentBytes = send(sock, buffer, length, MsgFlags);
 		if (sentBytes < 0) return (int)sentBytes - 1;
 		return (int)sentBytes;
 	}
@@ -58,11 +58,11 @@ public:
 		addr.sun_family = AF_UNIX;
 
 		//Create the socket
-		socket = socket(AF_UNIX, SOCK_STREAM, 0);
-		if (socket == -1) return -1;
+		sock = socket(AF_UNIX, SOCK_STREAM, 0);
+		if (sock == -1) return -1;
 
 		//Yes.. do what this does
-		fcntl(socket, F_SETFL, O_NONBLOCK);
+		fcntl(sock, F_SETFL, O_NONBLOCK);
 
 #ifdef SO_NOSIGPIPE
 		int optval = 1;
@@ -71,7 +71,7 @@ public:
 
 		//Update the address
 		snprintf(addr.sun_path, sizeof(addr.sun_path), "%s", pipename);
-		int err = connect(socket, (const sockaddr*)&addr, sizeof(addr));
+		int err = connect(sock, (const sockaddr*)&addr, sizeof(addr));
 		if (err == 0) {
 			isOpened = true;
 			return 0;
@@ -83,14 +83,14 @@ public:
 
 	void close(void) override
 	{
-		if (isConnected()) close(socket);
-		socket = -1;
+		if (isConnected()) close(sock);
+		sock = -1;
 		isOpened = false;
 	}
 
 
 private:
-	int socket;
+	int sock;
 	bool isOpened;
 };
 
