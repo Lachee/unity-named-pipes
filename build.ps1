@@ -1,9 +1,22 @@
 ﻿#powershell -ExecutionPolicy ByPass -File build.ps1
+[CmdletBinding()]
+Param(
+	[switch]$BuildLibrary
+)
 
-Write-Host "Generating CMake..."
-mkdir build --Forced
-cd build
-cmake ..
+function BuildLibrary() 
+{
+    Write-Host "Generating CMake..."
+    mkdir build
+    cd build
+    cmake ..
+        
+    Write-Host "Building Project..."
+    msbuild "NativeNamedPipe.sln"
+    cd ..
+}
 
-Write-Host "Building Project..."
-msbuild NativeNamedPipe
+if ($BuildLibrary)
+{
+    BuildCMake
+}
