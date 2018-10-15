@@ -3,9 +3,9 @@
 
 #include "NativeNamedPipe.h"
 
-extern "C" NATIVEPIPE_API BaseNamedPipeClient* CreateClient() { return BaseNamedPipeClient::create(); }
+extern "C" NATIVEPIPE_API BaseNamedPipeClient* createClient() { return BaseNamedPipeClient::create(); }
 
-extern "C" NATIVEPIPE_API void DestroyClient(BaseNamedPipeClient* client)
+extern "C" NATIVEPIPE_API void destroyClient(BaseNamedPipeClient* client)
 {
 	if (client != NULL) 
 	{

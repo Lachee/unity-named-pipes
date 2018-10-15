@@ -12,8 +12,8 @@
 #    define NATIVEPIPE_API __attribute__((visibility("default")))
 #  endif
 
-extern "C" NATIVEPIPE_API BaseNamedPipeClient* CreateClient();
-extern "C" NATIVEPIPE_API void DestroyClient(BaseNamedPipeClient* client);
+extern "C" NATIVEPIPE_API BaseNamedPipeClient* createClient();
+extern "C" NATIVEPIPE_API void destroyClient(BaseNamedPipeClient* client);
 
 extern "C" NATIVEPIPE_API bool isConnected(BaseNamedPipeClient* client);
 extern "C" NATIVEPIPE_API int readFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length);
