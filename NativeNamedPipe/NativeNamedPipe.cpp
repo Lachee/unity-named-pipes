@@ -10,8 +10,8 @@ extern "C" NATIVEPIPE_API void DestroyClient(BaseNamedPipeClient* client)
 	if (client != NULL) 
 	{
 		//close the client
-		if (client->isConnected())
-			client->close();
+		if (isConnected(client))
+			close(client);
 
 		//delete and nullify the client
 		delete client;
@@ -19,8 +19,8 @@ extern "C" NATIVEPIPE_API void DestroyClient(BaseNamedPipeClient* client)
 	}
 }
 
-extern "C" NATIVEPIPE_API bool isConnected(BaseNamedPipeClient* client) { return client->isConnected(); }
-extern "C" NATIVEPIPE_API int readFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length) { return client->readFrame(buffer, length); }
-extern "C" NATIVEPIPE_API int writeFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length) { return client->writeFrame(buffer, length); }
-extern "C" NATIVEPIPE_API int open(BaseNamedPipeClient* client, char* pipename) { return client->open(pipename); }
-extern "C" NATIVEPIPE_API void close(BaseNamedPipeClient* client) { client->close(); }
+extern "C" NATIVEPIPE_API bool isConnected(BaseNamedPipeClient* client) { return isConnected(client); }
+extern "C" NATIVEPIPE_API int readFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length) { return readFrame(client, buffer, length); }
+extern "C" NATIVEPIPE_API int writeFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length) { return writeFrame(client, buffer, length); }
+extern "C" NATIVEPIPE_API int open(BaseNamedPipeClient* client, char* pipename) { return open(client, pipename); }
+extern "C" NATIVEPIPE_API void close(BaseNamedPipeClient* client) { close(client); }

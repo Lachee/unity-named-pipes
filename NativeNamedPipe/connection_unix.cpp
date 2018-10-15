@@ -15,10 +15,7 @@ static int MsgFlags = MSG_NOSIGNAL;
 static int MsgFlags = 0;
 #endif
 
-class BaseNamedPipeClient
-{
-	static BaseNamedPipeClient* BaseNamedPipeClient::create() { return (BaseNamedPipeClient*)(new NamedPipeClientUnix()); }
-};
+BaseNamedPipeClient* BaseNamedPipeClient::create() { return (BaseNamedPipeClient*)(new NamedPipeClientUnix()); }
 
 class NamedPipeClientUnix : BaseNamedPipeClient
 {

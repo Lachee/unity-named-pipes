@@ -3,12 +3,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-class BaseNamedPipeClient
-{
-	static BaseNamedPipeClient* BaseNamedPipeClient::create() { return (BaseNamedPipeClient*)(new NamedPipeClientWindows()); }	
-};
-
-class NamedPipeClientWindows : BaseNamedPipeClient
+class NamedPipeClientWindows : public BaseNamedPipeClient
 {
 public:
 	NamedPipeClientWindows()
@@ -17,6 +12,8 @@ public:
 		isOpened = false;
 	}
 
+	~NamedPipeClientWindows() = default;
+	
 	bool isConnected();
 	int readFrame(unsigned char* buffer, int length);
 	int writeFrame(unsigned char* buffer, int length);
@@ -29,6 +26,8 @@ private:
 	bool isOpened;
 };
 
+
+BaseNamedPipeClient* BaseNamedPipeClient::create() { return (BaseNamedPipeClient*)(new NamedPipeClientWindows()); }
 
 bool NamedPipeClientWindows::isConnected()
 {
