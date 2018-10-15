@@ -12,11 +12,11 @@
 #    define NATIVEPIPE_API __attribute__((visibility("default")))
 #  endif
 
-extern "C" NATIVEPIPE_API NamedPipeClient* CreateNamedPipeClient();
-extern "C" NATIVEPIPE_API void DestroyNamedPipeClient(NamedPipeClient* client);
+extern "C" NATIVEPIPE_API BaseNamedPipeClient* CreateClient();
+extern "C" NATIVEPIPE_API void DestroyClient(BaseNamedPipeClient* client);
 
-extern "C" NATIVEPIPE_API bool isConnected(NamedPipeClient* client);
-extern "C" NATIVEPIPE_API int readFrame(NamedPipeClient* client, unsigned char* buffer, int length);
-extern "C" NATIVEPIPE_API int writeFrame(NamedPipeClient* client, unsigned char* buffer, int length);
-extern "C" NATIVEPIPE_API int open(NamedPipeClient* client, char* pipename);
-extern "C" NATIVEPIPE_API void close(NamedPipeClient* client);
+extern "C" NATIVEPIPE_API bool isConnected(BaseNamedPipeClient* client);
+extern "C" NATIVEPIPE_API int readFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length);
+extern "C" NATIVEPIPE_API int writeFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length);
+extern "C" NATIVEPIPE_API int open(BaseNamedPipeClient* client, char* pipename);
+extern "C" NATIVEPIPE_API void close(BaseNamedPipeClient* client);
