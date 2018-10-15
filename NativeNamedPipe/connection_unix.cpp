@@ -23,7 +23,6 @@ public:
 		socket = -1;
 		isOpened = false;
 	}
-	~NamedPipeClientUnix() = default;
 
 	bool isConnected() override
 	{
@@ -36,7 +35,7 @@ public:
 		if (!isConnected()) return -1;
 
 		size_t bytesLength = (size_t)length;
-		int res = (int)recv(socket, data, bytesLength, MsgFlags);
+		int res = (int)recv(socket, buffer, bytesLength, MsgFlags);
 		if (res < 0) return (int)res - 1;
 
 		return res;
