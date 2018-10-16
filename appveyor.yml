@@ -6,9 +6,18 @@ build_script:
 - ps: |
     if ($isLinux) 
     {
-        ./build.sh
+        ./build-library.sh
     } 
     else
     {
-        ./build.ps1 -BuildPackage        
+        ./build-library.ps1  
     }
+    
+after_build:
+- ps: ./build-package.ps1
+
+artifacts:
+- path: artifacts
+  name: Artifacts
+- path: artifacts/UnityNamedPipes.unitypackage
+  name: Unity Package

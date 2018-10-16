@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "=== Unity Named Pipe Linux Build ==="
 echo "Generating CMake..."
 mkdir build
 cd build
