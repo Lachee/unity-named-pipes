@@ -56,6 +56,7 @@ if ($BuildLibrary)
 if ($BuildPackage) 
 {
 	Write-Host "Building Unity Package..."
+	mkdir "artifacts" -Force
 	RunUnityExporter "tools/unity-package-exporter" "UnityNamedPipes" "artifacts/UnityNamedPipes.unitypackage"
 }
 
