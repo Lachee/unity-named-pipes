@@ -6,7 +6,7 @@ build_script:
 - ps: |
     if ($isLinux) 
     {
-        ./build-library.sh
+        sh ./build-library.sh
     } 
     else
     {
