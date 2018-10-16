@@ -17,7 +17,9 @@ after_build:
 - ps: ./build-package.ps1
 
 artifacts:
-- path: artifacts
-  name: Artifacts
 - path: artifacts/UnityNamedPipes.unitypackage
   name: Unity Package
+- path: artifacts/libNativeNamedPipe.so
+  name: Unix Wrapper
+- path: artifacts/NativeNamedPipe.dll
+  name: Windows Wrapper
