@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings name="TestSettings" id="a1011191-a333-4683-9135-97afbb4d4c72" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>These are default test settings for a local test run.</Description>
+  <Deployment enabled="false" />
+  <Execution>
+    <TestTypeSpecific>
+      <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
+        <AssemblyResolution applicationBaseDirectory="%USERPROFILE%\Documents\GitHub\unity-named-pipes\NativeNamedPipe.UnitTest">
+          <TestDirectory useLoadContext="true" />
+          <RuntimeResolution>
+            <Directory path="%USERPROFILE%\Documents\GitHub\unity-named-pipes\NativeNamedPipe.UnitTest" includeSubDirectories="true" />
+          </RuntimeResolution>
+        </AssemblyResolution>
+      </UnitTestRunConfig>
+    </TestTypeSpecific>
+    <AgentRule name="LocalMachineDefaultRole">
+    </AgentRule>
+  </Execution>
+  <Properties />
+</TestSettings>

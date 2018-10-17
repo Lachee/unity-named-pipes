@@ -1,10 +1,11 @@
-﻿#powershell -ExecutionPolicy ByPass -File build.ps1
+﻿#powershell -ExecutionPolicy ByPass -File build-library.ps1
+#https://gist.github.com/IlyaFinkelshteyn/79af78657660e118b15d3ab9d62ab8a1
 function BuildLibrary([string] $target) 
 {
     Write-Host "Generating CMake..."
     mkdir build -Force
     cd build
-    cmake ..
+    cmake .. -DCMAKE_GENERATOR_PLATFORM=x64
         
     Write-Host "Generating Build..."
     msbuild "NativeNamedPipe.sln" /p:Configuration=$target
