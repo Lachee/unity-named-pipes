@@ -16,25 +16,7 @@ namespace Lachee.IO
         [DllImport(LIBRARY_NAME, EntryPoint = "test", CallingConvention = CallingConvention.Cdecl)]
         static extern bool test(int a, int b, IntPtr @out);
 
-        static bool ValidateDll()
-        {
-            IntPtr ptr = Marshal.AllocHGlobal(sizeof(int));
-            try
-            {
-                bool state = test(-10, 10, ptr);
-                return state && Marshal.ReadInt32(ptr) == 0;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Failed DLL Test!");
-                Console.WriteLine(e.Message);
-                return false;
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(ptr);
-            }
-        }
+ 
         static void TestPipe()
         {
             //using (var client = new System.IO.Pipes.NamedPipeClientStream(".", PIPE_NAME))
@@ -147,5 +129,27 @@ namespace Lachee.IO
                 }
             }
         }
+
+        static bool ValidateDll()
+        {
+            IntPtr ptr = Marshal.AllocHGlobal(sizeof(int));
+            try
+            {
+                bool state = test(-10, 10, ptr);
+                return state && Marshal.ReadInt32(ptr) == 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed DLL Test!");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(ptr);
+            }
+        }
     }
+
+
 }

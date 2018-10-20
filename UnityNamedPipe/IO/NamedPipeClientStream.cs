@@ -44,6 +44,9 @@ namespace Lachee.IO
         /// The pipe name for this client.
         /// </summary>
         public string PipeName { get; }
+        
+        /// <summary>Prefix to prepend to all pipe names.</summary>
+        private static readonly string s_pipePrefix = Path.Combine(Path.GetTempPath(), "CoreFxPipe_");
 
         #region Constructors
         /// <summary>
@@ -54,7 +57,7 @@ namespace Lachee.IO
         public NamedPipeClientStream(string server, string pipeName)
         {
             ptr = Native.CreateClient();
-            PipeName = string.Format(@"\\{0}\pipe\{1}", server, pipeName);
+            PipeName = FormatPipe(server, pipeName); 
         }
         
         ~NamedPipeClientStream()
@@ -70,6 +73,22 @@ namespace Lachee.IO
                 Disconnect();
                 Native.DestroyClient(ptr);
                 _isDisposed = true;
+            }
+        }
+
+        private static string FormatPipe(string server, string pipeName)
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                default:
+                case PlatformID.Win32NT:
+                    return string.Format(@"\\{0}\pipe\{1}", server, pipeName);
+
+                case PlatformID.Unix:
+                    if (server != ".")
+                        throw new PlatformNotSupportedException("Remote pipes are not supported on this platform.");
+
+                    return s_pipePrefix + pipeName;
             }
         }
         #endregion
