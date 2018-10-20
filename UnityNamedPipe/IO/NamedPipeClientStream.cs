@@ -46,7 +46,7 @@ namespace Lachee.IO
         public string PipeName { get; }
         
         /// <summary>Prefix to prepend to all pipe names.</summary>
-        private static readonly string s_pipePrefix = Path.GetTempPath();
+        private static readonly string s_pipePrefix = Path.Combine(Path.GetTempPath(), "CoreFxPipe_");
 
         #region Constructors
         /// <summary>
