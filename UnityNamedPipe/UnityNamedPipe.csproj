@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="IO\Exceptions\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd  $(SolutionDir)&#xD;&#xA;powershell -ExecutionPolicy ByPass -File  $(SolutionDir)\build-library.ps1 -target $(ConfigurationName)&#xD;&#xA;copy $(SolutionDir)\artifacts\* $(TargetDir)" />
+  </Target>
+
+</Project>

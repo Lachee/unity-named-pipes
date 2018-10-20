@@ -8,9 +8,8 @@ set(BASE_SRC "NativeNamedPipe.cpp" "NativeNamedPipe.h" "connection.h")
 
 # Add Window Def
 if(WIN32)	
-	add_definitions(-DCMAKE_GENERATOR_PLATFORM=x64)
     add_definitions(-DNATIVEPIPE_WINDOWS)
-    set(BASE_SRC ${BASE_SRC} "connection_win.cpp")
+    set(BASE_SRC ${BASE_SRC} "dllmain.cpp" "connection_win.cpp")
 endif(WIN32)
 
 # Add Unix Def

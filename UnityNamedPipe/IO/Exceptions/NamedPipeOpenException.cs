@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Lachee.IO.Exceptions
 {
@@ -11,6 +8,6 @@ namespace Lachee.IO.Exceptions
         internal NamedPipeOpenException(int err) : base("An exception has occured while trying to open the pipe. Error Code: " + err)
         {
             ErrorCode = err;
-        }
+        }        
     }
 }

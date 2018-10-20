@@ -1,17 +1,14 @@
 ﻿using Lachee.IO.Exceptions;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using UnityEngine;
 
 namespace Lachee.IO
 {
-    public class NamedPipeClient : System.IO.Stream
+    public class NamedPipeClientStream : System.IO.Stream
     {
         private IntPtr ptr;
-        private bool _disposed;
+        private bool _isDisposed;
 
         /// <summary>
         /// Can the stream read? Always returns true.
@@ -43,16 +40,24 @@ namespace Lachee.IO
         /// </summary>
         public bool IsConnected { get { return Native.IsConnected(ptr); } }
 
+        /// <summary>
+        /// The pipe name for this client.
+        /// </summary>
+        public string PipeName { get; }
+
         #region Constructors
         /// <summary>
         /// Creates a new instance of a NamedPipeClient
         /// </summary>
-        public NamedPipeClient()
+        /// <param name="server">The remote to connect too</param>
+        /// <param name="pipeName">The name of the pipe that will be connected too.</param>
+        public NamedPipeClientStream(string server, string pipeName)
         {
             ptr = Native.CreateClient();
+            PipeName = string.Format(@"\\{0}\pipe\{1}", server, pipeName);
         }
         
-        ~NamedPipeClient()
+        ~NamedPipeClientStream()
         {
             Dispose(false);
         }
@@ -60,10 +65,11 @@ namespace Lachee.IO
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!_disposed)
+            if (!_isDisposed)
             {
+                Disconnect();
                 Native.DestroyClient(ptr);
-                _disposed = true;
+                _isDisposed = true;
             }
         }
         #endregion
@@ -73,9 +79,9 @@ namespace Lachee.IO
         /// Attempts to open a named pipe.
         /// </summary>
         /// <param name="name">The name of the pipe</param>
-        public void OpenPipe(string name)
+        public void Connect()
         {
-            int code = Native.Open(ptr, name);
+            int code = Native.Open(ptr, PipeName);
             if (!IsConnected)  throw new NamedPipeOpenException(code);
             
         }
@@ -83,7 +89,7 @@ namespace Lachee.IO
         /// <summary>
         /// Closes the named pipe already opened.
         /// </summary>
-        public void ClosePipe()
+        public void Disconnect()
         {
             Native.Close(ptr);
         }
@@ -218,13 +224,13 @@ namespace Lachee.IO
 
             #region State Control
 
-            [DllImport(LIBRARY_NAME, EntryPoint = "isConnected", CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool IsConnected(IntPtr client);
+            [DllImport(LIBRARY_NAME, EntryPoint = "isConnected", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool IsConnected([MarshalAs(UnmanagedType.SysInt)] IntPtr client);
 
-            [DllImport(LIBRARY_NAME, EntryPoint = "open", CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(LIBRARY_NAME, EntryPoint = "open", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Open(IntPtr client, [MarshalAs(UnmanagedType.LPStr)] string pipename);
 
-            [DllImport(LIBRARY_NAME, EntryPoint = "close", CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(LIBRARY_NAME, EntryPoint = "close", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Close(IntPtr client);
 
             #endregion

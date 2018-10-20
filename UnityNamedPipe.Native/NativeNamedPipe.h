@@ -20,3 +20,8 @@ extern "C" NATIVEPIPE_API int readFrame(BaseNamedPipeClient* client, unsigned ch
 extern "C" NATIVEPIPE_API int writeFrame(BaseNamedPipeClient* client, unsigned char* buffer, int length);
 extern "C" NATIVEPIPE_API int open(BaseNamedPipeClient* client, char* pipename);
 extern "C" NATIVEPIPE_API void close(BaseNamedPipeClient* client);
+extern "C" NATIVEPIPE_API bool test(int a, int b, int* out) 
+{
+	*out = a + b;
+	return *out == 0;
+}

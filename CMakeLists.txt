@@ -6,4 +6,4 @@ cmake_minimum_required (VERSION 3.5)
 project ("NativeNamedPipe")
 
 # Include sub-projects.
-add_subdirectory ("NativeNamedPipe")
+add_subdirectory ("UnityNamedPipe.Native")
