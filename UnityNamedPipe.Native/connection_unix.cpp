@@ -48,7 +48,7 @@ public:
 
 		size_t bytesLength = (size_t)length;
 		ssize_t sentBytes = send(sock, buffer, length, MsgFlags);
-		if (res < 0) return -errno;
+		if (sentBytes < 0) return -errno;
 		
 		return (int)sentBytes;
 	}
