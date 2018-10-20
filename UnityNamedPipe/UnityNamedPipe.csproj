@@ -11,8 +11,4 @@
     <Folder Include="IO\Exceptions\" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd  $(SolutionDir)&#xD;&#xA;powershell -ExecutionPolicy ByPass -File  $(SolutionDir)\build-library.ps1 -target $(ConfigurationName)&#xD;&#xA;copy $(SolutionDir)\artifacts\* $(TargetDir)" />
-  </Target>
-
 </Project>
