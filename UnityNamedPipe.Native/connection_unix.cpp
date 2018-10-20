@@ -36,7 +36,7 @@ public:
 
 		size_t bytesLength = (size_t)length;
 		int res = (int)recv(sock, buffer, bytesLength, MsgFlags);
-		if (res < 0) return (int)res - 1;
+		if (res == UDT::ERROR) return -1 * (::getlasterror().getErrorCode());
 
 		return res;
 	}
