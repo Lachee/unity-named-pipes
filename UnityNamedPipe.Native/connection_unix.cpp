@@ -60,7 +60,7 @@ public:
 
 		//Create the socket
 		sock = socket(AF_UNIX, SOCK_STREAM, 0);
-		if (sock == -1) return -1;
+		if (sentBytes < 0) return errno;
 
 		//Yes.. do what this does
 		fcntl(sock, F_SETFL, O_NONBLOCK);
@@ -72,14 +72,20 @@ public:
 
 		//Update the address
 		snprintf(addr.sun_path, sizeof(addr.sun_path), "%s", pipename);
-		int err = connect(sock, (const sockaddr*)&addr, sizeof(addr));
-		if (err == 0) {
-			isOpened = true;
-			return 0;
+		int response = connect(sock, (const sockaddr*)&addr, sizeof(addr));
+		if (response < 0) 
+		{
+			//Prepare the error code (to return later) and close the connect
+			int errorcode = errno * 1000;
+			close();
+			
+			//Return the errorcode.
+			return errorcode;
 		}
-
-		close();
-		return err;
+		
+		//We have opened, success!
+		isOpened = true;
+		return 0;
 	}
 
 	void close(void) override
