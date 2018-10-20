@@ -60,7 +60,7 @@ public:
 
 		//Create the socket
 		sock = socket(AF_UNIX, SOCK_STREAM, 0);
-		if (sentBytes < 0) return errno;
+		if (sock < 0) return errno;
 
 		//Yes.. do what this does
 		fcntl(sock, F_SETFL, O_NONBLOCK);
