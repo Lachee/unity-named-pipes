@@ -46,7 +46,7 @@ namespace Lachee.IO
         public string PipeName { get; }
         
         /// <summary>Prefix to prepend to all pipe names.</summary>
-        private static readonly string s_pipePrefix = Path.Combine(Path.GetTempPath(), "CoreFxPipe_");
+        private static readonly string s_pipePrefix = Path.GetTempPath();
 
         #region Constructors
         /// <summary>
@@ -57,7 +57,8 @@ namespace Lachee.IO
         public NamedPipeClientStream(string server, string pipeName)
         {
             ptr = Native.CreateClient();
-            PipeName = FormatPipe(server, pipeName); 
+            PipeName = FormatPipe(server, pipeName);
+            Console.WriteLine("Created new NamedPipeClientStream '{0}' => '{1}'", pipeName, PipeName);
         }
         
         ~NamedPipeClientStream()
