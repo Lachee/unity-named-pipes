@@ -32,11 +32,11 @@ public:
 	int readFrame(unsigned char* buffer, int length) override
 	{
 		if (length == 0) return 0;
-		if (!isConnected()) return -1;
+		if (!isConnected()) return -4200;
 
 		size_t bytesLength = (size_t)length;
 		int res = (int)recv(sock, buffer, bytesLength, MsgFlags);
-		if (res < 0) return -1 * (xn_getlasterror());
+		if (res < 0) return -errno;
 
 		return res;
 	}
@@ -44,7 +44,7 @@ public:
 	int writeFrame(unsigned char* buffer, int length) override
 	{
 		if (length == 0) return 0;
-		if (!isConnected()) return -1;
+		if (!isConnected()) return -4200;
 
 		size_t bytesLength = (size_t)length;
 		ssize_t sentBytes = send(sock, buffer, length, MsgFlags);
