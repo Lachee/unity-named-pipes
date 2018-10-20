@@ -26,7 +26,8 @@ namespace Lachee.IO
                     string message = "Hello World!";
 
                     Console.WriteLine("CLIENT: Sending '{0}'...", message);
-                    client.Write(new ReadOnlySpan<byte>(System.Text.Encoding.ASCII.GetBytes(message)));
+                    byte[] msgbytes = System.Text.Encoding.ASCII.GetBytes(message);
+                    client.Write(msgbytes, 0, msgbytes.Length);
 
                     Console.WriteLine("CLIENT: Sent. Reading message...");
                     message = "";
@@ -113,7 +114,8 @@ namespace Lachee.IO
 
                     //Send it back
                     Console.WriteLine("SERVER: Message read. Returning message '{0}'...", message);
-                    await server.WriteAsync(new ReadOnlyMemory<byte>(System.Text.Encoding.ASCII.GetBytes(message)));
+                    byte[] msgbytes = System.Text.Encoding.ASCII.GetBytes(message);
+                    await server.WriteAsync(msgbytes, 0, msgbytes.Length);
 
                     Console.WriteLine("SERVER: Disconnecting...");
                     server.Disconnect();
