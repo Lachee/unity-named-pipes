@@ -36,8 +36,11 @@ public:
 
 		size_t bytesLength = (size_t)length;
 		int res = (int)recv(sock, buffer, bytesLength, MsgFlags);
-		if (res == EAGIN) return 0;
-		if (res < 0) return -errno;
+		if (res < 0)
+		{
+			if (errno == 11) return 0;
+			 return -errno;
+		}
 
 		return res;
 	}
