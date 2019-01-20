@@ -15,6 +15,6 @@
 
 Write-Host "=== Unity Named Pipe Unity Build ==="
 mkdir "artifacts"
-RunUnityExporter "tools/unity-package-exporter" "UnityNamedPipes" "artifacts/UnityNamedPipes.unitypackage"
+RunUnityExporter "tools/unity-package-exporter" "Unity Package" "artifacts/UnityNamedPipes.unitypackage"
 
 Write-Host "Done!"
