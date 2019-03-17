@@ -11,7 +11,7 @@ build_script:
     else
     {
         Write-Host "Building 64Bit"
-        ./build-library.ps1 -64bit
+        ./build-library.ps1 -make64bit
 
         Write-Host "Building 32Bit"
         ./build-library.ps1
