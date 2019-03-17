@@ -1,7 +1,7 @@
 version: 1.0.{build}
 image:
-- Ubuntu1804
 - Visual Studio 2017
+- Ubuntu1804
 build_script:
 - ps: |
     if ($isLinux) 
@@ -27,3 +27,5 @@ artifacts:
   name: Unix Wrapper
 - path: artifacts/NativeNamedPipe.dll
   name: Windows Wrapper
+- path: artifacts/NativeNamedPipe_x86.dll
+  name: Windows 32bit Wrapper
