@@ -12,6 +12,6 @@ cd ..
 
 echo "Copying Build..."
 mkdir artifacts
-cp build/UnityNamedPipe.Native/libNativeNamedPipe.so artifacts/NativeNamedPipe.so
+cp build/UnityNamedPipe.Native/libNativeNamedPipe.so artifacts/libNativeNamedPipe.so
 
 echo "Done!"

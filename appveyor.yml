@@ -10,7 +10,11 @@ build_script:
     } 
     else
     {
-        ./build-library.ps1  
+        Write-Host "Building 64Bit"
+        ./build-library.ps1 -64bit
+
+        Write-Host "Building 32Bit"
+        ./build-library.ps1
     }
     
 after_build:

@@ -2,7 +2,7 @@
 
 param(
 	[string] $target,
-	[bool] $64bit
+	[switch] $64bit
 )
 
 #https://gist.github.com/IlyaFinkelshteyn/79af78657660e118b15d3ab9d62ab8a1
@@ -41,10 +41,29 @@ function BuildLibrary([string] $target, [bool] $is64bit)
 
 	Write-Host "Collecting Artifacts..."
 	mkdir "artifacts" -Force
-	cp "build\\UnityNamedPipe.Native\\$target\\NativeNamedPipe.dll" "artifacts\\NativeNamedPipe.dll"
+	
+	if ($is64bit)  
+	{
+		cp "build\\UnityNamedPipe.Native\\Release\\NativeNamedPipe.dll" "artifacts\\NativeNamedPipe.dll"
+	}
+	else
+	{
+		cp "build\\UnityNamedPipe.Native\\Release\\NativeNamedPipe.dll" "artifacts\\NativeNamedPipe_x86.dll"
+	}
+
+	
+	Write-Host "Cleaning Up..."
+	Remove-Item -path build -recurse -force
 }
 
 Write-Host "=== Unity Named Pipe Windows Build ==="
-BuildLibrary $target $64bit
+if ($64bit) 
+{
+	BuildLibrary $target $true
+}
+else
+{
+	BuildLibrary $target $false
+}
 
 Write-Host "Done!"
