@@ -1,22 +1,22 @@
 version: 1.0.{build}
 image:
 - Visual Studio 2017
-- Ubuntu1804
+- Ubuntu
+- macOS
 build_script:
 - ps: |
-    if ($isLinux) 
-    {
-        sh ./build-library.sh
-    } 
-    else
+    if ($isWindows) 
     {
         Write-Host "Building 64Bit"
         ./build-library.ps1 -make64bit
 
         Write-Host "Building 32Bit"
         ./build-library.ps1
+    } 
+    else
+    {
+        sh ./build-library.sh
     }
-    
 after_build:
 - ps: |
     if ($isWindows) 
