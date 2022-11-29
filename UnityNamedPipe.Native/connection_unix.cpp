@@ -71,7 +71,7 @@ public:
 
 #ifdef SO_NOSIGPIPE
 		int optval = 1;
-		setsockopt(socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
+		setsockopt(sock, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
 #endif
 
 		//Update the address
