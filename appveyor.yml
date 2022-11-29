@@ -12,10 +12,14 @@ build_script:
 
         Write-Host "Building 32Bit"
         ./build-library.ps1
-    } 
+    }
+    else if ($isMacOS)
+    {
+        sh ./build-mac-library.sh
+    }
     else
     {
-        sh ./build-library.sh
+        sh ./build-linux-library.sh
     }
 after_build:
 - ps: |
@@ -29,6 +33,8 @@ artifacts:
   name: Unity Package
 - path: artifacts/libNativeNamedPipe.so
   name: Unix Wrapper
+- path: artifacts/libNativeNamedPipe.dylib
+  name: Mac Wrapper
 - path: artifacts/NativeNamedPipe.dll
   name: Windows Wrapper
 - path: artifacts/NativeNamedPipe_x86.dll
