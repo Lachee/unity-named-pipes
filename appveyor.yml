@@ -13,7 +13,7 @@ build_script:
         Write-Host "Building 32Bit"
         ./build-library.ps1
     }
-    else if ($isMacOS)
+    elseif ($isMacOS)
     {
         sh ./build-mac-library.sh
     }
