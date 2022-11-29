@@ -18,7 +18,11 @@ build_script:
     }
     
 after_build:
-- ps: ./build-package.ps1
+- ps: |
+    if ($isWindows) 
+    {
+        ./build-package.ps1
+    }
 
 artifacts:
 - path: artifacts/UnityNamedPipes.unitypackage
