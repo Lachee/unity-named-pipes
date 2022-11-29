@@ -18,4 +18,11 @@ if(UNIX)
     set(BASE_SRC ${BASE_SRC} "connection_unix.cpp")
 endif(UNIX)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_library(NativeNamedPipe SHARED ${BASE_SRC})
+
+if (APPLE)
+    target_link_libraries(NativeNamedPipe PRIVATE "-framework AppKit")
+endif (APPLE)

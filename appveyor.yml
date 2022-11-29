@@ -1,14 +1,11 @@
 version: 1.0.{build}
 image:
 - Visual Studio 2017
-- Ubuntu1804
+- Ubuntu
+- macOS
 build_script:
 - ps: |
-    if ($isLinux) 
-    {
-        sh ./build-library.sh
-    } 
-    else
+    if ($isWindows) 
     {
         Write-Host "Building 64Bit"
         ./build-library.ps1 -make64bit
@@ -16,7 +13,14 @@ build_script:
         Write-Host "Building 32Bit"
         ./build-library.ps1
     }
-    
+    elseif ($isMacOS)
+    {
+        sh ./build-mac-library.sh
+    }
+    else
+    {
+        sh ./build-linux-library.sh
+    }
 after_build:
 - ps: |
     if ($isWindows) 
@@ -27,8 +31,10 @@ after_build:
 artifacts:
 - path: artifacts/UnityNamedPipes.unitypackage
   name: Unity Package
-- path: artifacts/libNativeNamedPipe.so
+- path: artifacts/NativeNamedPipe.so
   name: Unix Wrapper
+- path: artifacts/NativeNamedPipe.dylib
+  name: Mac Wrapper
 - path: artifacts/NativeNamedPipe.dll
   name: Windows Wrapper
 - path: artifacts/NativeNamedPipe_x86.dll
