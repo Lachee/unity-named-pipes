@@ -14,6 +14,6 @@ cd ..
 echo "Copying Build..."
 rm -rf artifacts
 mkdir artifacts
-cp build/UnityNamedPipe.Native/libNativeNamedPipe.dylib artifacts/NativeNamedPipe.dylib
+cp build/UnityNamedPipe.Native/libNativeNamedPipe.dylib artifacts/NativeNamedPipe.bundle
 
 echo "Done!"

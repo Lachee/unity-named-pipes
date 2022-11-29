@@ -8,7 +8,6 @@ param(
 function BuildLibrary([bool] $is64bit) 
 {
     Write-Host "Generating CMake..."
-	rd /s build
     mkdir build -Force
     cd build
 
@@ -40,7 +39,6 @@ function BuildLibrary([bool] $is64bit)
 	cd ..
 
 	Write-Host "Collecting Artifacts..."
-	rd /s "artifacts"
 	mkdir "artifacts" -Force
 	
 	if ($is64bit)  
