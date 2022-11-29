@@ -31,9 +31,9 @@ after_build:
 artifacts:
 - path: artifacts/UnityNamedPipes.unitypackage
   name: Unity Package
-- path: artifacts/libNativeNamedPipe.so
+- path: artifacts/NativeNamedPipe.so
   name: Unix Wrapper
-- path: artifacts/libNativeNamedPipe.dylib
+- path: artifacts/NativeNamedPipe.dylib
   name: Mac Wrapper
 - path: artifacts/NativeNamedPipe.dll
   name: Windows Wrapper
